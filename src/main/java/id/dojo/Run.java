@@ -8,14 +8,14 @@ public class Run {
     public static void main(String[] args) {
         int row = 30;
         int col = 20;
-        int posX = 5;
-        int posY = 5;
+        int posX = 8;
+        int posY = 8;
 
         Snake snake = Snake.getBuilder()
                 .setName("Anaconda")
                 .setAppearance(" o ")
                 .setPosition(posX,posY)
-                .setSize(3)
+                .setSize(4)
                 .build();
 
         snake.generateBody();

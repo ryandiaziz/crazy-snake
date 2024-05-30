@@ -4,6 +4,7 @@ package id.dojo;
 
 import id.dojo.models.Point;
 import id.dojo.things.Board;
+import id.dojo.things.Cell;
 import id.dojo.things.Snake;
 import id.dojo.things.Wall;
 
@@ -26,8 +27,9 @@ public class Game {
     public void render() throws IOException, InterruptedException {
         while (true){
             board.displayBoard();
-            snake.stepForward(board);
-            Thread.sleep(100);
+            snakeMovement();
+
+            Thread.sleep(80);
 
             new ProcessBuilder("clear")
                     .inheritIO()
@@ -35,6 +37,17 @@ public class Game {
                     .waitFor();
         }
 
+    }
+
+    public void snakeMovement(){
+        Point foward = snake.checkFoward();
+        Cell cell = board.getBoard().get(foward.getX()).get(foward.getY());
+
+        if (cell.getThing() == null){
+            snake.stepForward(board);
+        }else {
+            snake.moveLeft(board);
+        }
     }
 
     public static Builder getBuilder(){
