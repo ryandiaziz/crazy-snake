@@ -15,7 +15,7 @@ public class Run {
                 .setName("Anaconda")
                 .setAppearance(" o ")
                 .setPosition(posX,posY)
-                .setSize(4)
+                .setSize(3)
                 .build();
 
         snake.generateBody();

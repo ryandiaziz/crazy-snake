@@ -2,6 +2,7 @@ package id.dojo;
 
 // Class untuk mengontrol jalannya game, mengatur board, snake dll
 
+import id.dojo.enums.Direction;
 import id.dojo.models.Point;
 import id.dojo.things.Board;
 import id.dojo.things.Cell;
@@ -39,14 +40,22 @@ public class Game {
 
     }
 
-    public void snakeMovement(){
-        Point foward = snake.checkFoward();
-        Cell cell = board.getBoard().get(foward.getX()).get(foward.getY());
+    private Boolean isEmpty(Point point){
+        return board.getBoard().get(point.getX()).get(point.getY()).getThing() == null;
+    }
 
-        if (cell.getThing() == null){
-            snake.stepForward(board);
-        }else {
-            snake.moveLeft(board);
+    public void snakeMovement(){
+        Direction direction = snake.getRandomDirection();
+        Point forward = snake.checkDirection("forward");
+        Point left = snake.checkDirection("left");
+        Point right = snake.checkDirection("right");
+
+        if (isEmpty(forward) && direction == Direction.FORWARD){
+            snake.snakeMovement(board, "forward");
+        }else if(isEmpty(left) && direction == Direction.LEFT){
+            snake.snakeMovement(board, "left");
+        } else if (isEmpty(right) && direction == Direction.RIGHT) {
+            snake.snakeMovement(board, "right");
         }
     }
 

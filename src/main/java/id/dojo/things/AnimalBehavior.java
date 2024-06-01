@@ -1,19 +1,14 @@
 package id.dojo.things;
 
+import id.dojo.enums.Direction;
 import id.dojo.models.Point;
 
 import javax.swing.*;
 
 public interface AnimalBehavior {
-    void stepForward(Board board);
+    void snakeMovement(Board board, String direction);
 
-    Point checkFoward();
+    Point checkDirection(String direction);
 
-    void moveLeft(Board board);
-
-    Point checkLeft();
-
-    void moveRight(Board board);
-
-    Point checkRight();
+    Direction getRandomDirection();
 }

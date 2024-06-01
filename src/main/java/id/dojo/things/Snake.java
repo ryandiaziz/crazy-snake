@@ -1,11 +1,13 @@
 package id.dojo.things;
 
 import id.dojo.Game;
+import id.dojo.enums.Direction;
 import id.dojo.models.Point;
 
 import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Snake extends Thing implements AnimalBehavior{
     // Besar ular termaksud dengan kepalanya
@@ -44,7 +46,7 @@ public class Snake extends Thing implements AnimalBehavior{
     }
 
     @Override
-    public void stepForward(Board board) {
+    public void snakeMovement(Board board, String direction) {
         int xBefore = head.getX();
         int yBefore = head.getY();
 
@@ -53,7 +55,7 @@ public class Snake extends Thing implements AnimalBehavior{
             board.putObject(bodPos, null);
         }
 
-        setHead(checkFoward());
+        setHead(checkDirection(direction));
 
         List<Point> newBody = new ArrayList<>();
         for (int i = 0; i < body.size(); i++) {
@@ -74,97 +76,68 @@ public class Snake extends Thing implements AnimalBehavior{
     }
 
     @Override
-    public Point checkFoward() {
+    public Point checkDirection(String direction) {
         int xPos = head.getX();
         int yPos = head.getY();
 
         if (head.getX() - 1 == body.getFirst().getX()){
-            xPos++;
-        } else if (head.getY() - 1 == body.getFirst().getY()){
-            yPos++;
-        }else if (head.getY() + 1 == body.getFirst().getY()){
-            yPos--;
-        }else if (head.getX() + 1 == body.getFirst().getX()){
-            xPos--;
-        }
-
-        return new Point(xPos, yPos);
-    }
-
-    @Override
-    public void moveLeft(Board board) {
-        int xBefore = head.getX();
-        int yBefore = head.getY();
-
-        board.putObject(head, null);
-        for (Point bodPos : body){
-            board.putObject(bodPos, null);
-        }
-
-        setHead(checkLeft());
-
-        List<Point> newBody = new ArrayList<>();
-        for (int i = 0; i < body.size(); i++) {
-            if (i == 0){
-                newBody.add(new Point(xBefore, yBefore));
-                continue;
+            switch (direction.toLowerCase()){
+                case "forward":
+                    xPos++;
+                    break;
+                case "left":
+                    yPos++;
+                    break;
+                case "right":
+                    yPos--;
+                    break;
             }
-            newBody.add(new Point(body.get(i-1).getX(),body.get(i-1).getY()));
-        }
-
-        body.removeAll(body);
-        body.addAll(newBody);
-
-        board.putObject(head, this);
-        for (Point bodPos : body){
-            board.putObject(bodPos,this);
-        }
-//        board.putObject(head, null);
-//
-//        for (Point bodPos : body){
-//            board.putObject(bodPos, null);
-//        }
-//
-//        head.setX(head.getX() - 1);
-//        board.putObject(head, this);
-//
-//        for (Point bodPos : body){
-//            if (bodPos.getY() == (head.getY())){
-//                bodPos.setX(bodPos.getX() - 1);
-//                board.putObject(bodPos,this);
-//                continue;
-//            }
-//            bodPos.setY(bodPos.getY()+1);
-//            board.putObject(bodPos, this);
-//        }
-    }
-
-    @Override
-    public Point checkLeft() {
-        int xPos = head.getX();
-        int yPos = head.getY();
-
-        if (head.getX() - 1 == body.getFirst().getX()){
-            yPos++;
         } else if (head.getY() - 1 == body.getFirst().getY()){
-            xPos--;
+            switch (direction.toLowerCase()){
+                case "forward":
+                    yPos++;
+                    break;
+                case "left":
+                    xPos--;
+                    break;
+                case "right":
+                    xPos++;
+                    break;
+            }
         }else if (head.getY() + 1 == body.getFirst().getY()){
-            xPos++;
+            switch (direction.toLowerCase()){
+                case "forward":
+                    yPos--;
+                    break;
+                case "left":
+                    xPos++;
+                    break;
+                case "right":
+                    xPos--;
+                    break;
+            }
         }else if (head.getX() + 1 == body.getFirst().getX()){
-            yPos--;
+            switch (direction.toLowerCase()){
+                case "forward":
+                    xPos--;
+                    break;
+                case "left":
+                    yPos--;
+                    break;
+                case "right":
+                    yPos++;
+                    break;
+            }
         }
 
         return new Point(xPos, yPos);
     }
 
-    @Override
-    public void moveRight(Board board) {
-
-    }
-
-    @Override
-    public Point checkRight() {
-        return null;
+    public Direction getRandomDirection() {
+        Random random = new Random();
+        Direction[] directions = Direction.values();
+        int randomIndex = random.nextInt(directions.length);
+        return directions[randomIndex];
     }
 
     public static Snake.Builder getBuilder(){
