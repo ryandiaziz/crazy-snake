@@ -1,5 +1,5 @@
 package id.dojo.enums;
 
 public enum Direction {
-    FORWARD,LEFT,RIGHT
+    UP, DOWN, LEFT, RIGHT
 }

@@ -1,10 +1,8 @@
 package id.dojo.things;
 
-import id.dojo.Game;
 import id.dojo.enums.Direction;
 import id.dojo.models.Point;
 
-import java.nio.file.attribute.PosixFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +12,7 @@ public class Snake extends Thing implements AnimalBehavior{
     private Point head;
     private int size;
     private List<Point> body;
+    private Direction directon = Direction.RIGHT;
 
     public Snake(Builder builder) {
         super(builder.getName(), builder.getAppearance());
@@ -25,7 +24,7 @@ public class Snake extends Thing implements AnimalBehavior{
 
     public void generateBody(){
         for (int i = 1; i <= size - 1; i++) {
-            body.add(new Point(head.getX(),head.getY() - i));
+            body.add(new Point(head.getX(), head.getY()+1));
         }
     }
 
@@ -43,6 +42,14 @@ public class Snake extends Thing implements AnimalBehavior{
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public Direction getDirecton() {
+        return directon;
+    }
+
+    public void setDirecton(Direction directon) {
+        this.directon = directon;
     }
 
     @Override
@@ -84,48 +91,60 @@ public class Snake extends Thing implements AnimalBehavior{
             switch (direction.toLowerCase()){
                 case "forward":
                     xPos++;
+                    this.directon = Direction.DOWN;
                     break;
                 case "left":
                     yPos++;
+                    this.directon = Direction.RIGHT;
                     break;
                 case "right":
                     yPos--;
+                    this.directon = Direction.LEFT;
                     break;
             }
         } else if (head.getY() - 1 == body.getFirst().getY()){
             switch (direction.toLowerCase()){
                 case "forward":
                     yPos++;
+                    this.directon = Direction.RIGHT;
                     break;
                 case "left":
                     xPos--;
+                    this.directon = Direction.UP;
                     break;
                 case "right":
                     xPos++;
+                    this.directon = Direction.DOWN;
                     break;
             }
         }else if (head.getY() + 1 == body.getFirst().getY()){
             switch (direction.toLowerCase()){
                 case "forward":
                     yPos--;
+                    this.directon = Direction.LEFT;
                     break;
                 case "left":
                     xPos++;
+                    this.directon = Direction.DOWN;
                     break;
                 case "right":
                     xPos--;
+                    this.directon = Direction.UP;
                     break;
             }
         }else if (head.getX() + 1 == body.getFirst().getX()){
             switch (direction.toLowerCase()){
                 case "forward":
                     xPos--;
+                    this.directon = Direction.UP;
                     break;
                 case "left":
                     yPos--;
+                    this.directon = Direction.LEFT;
                     break;
                 case "right":
                     yPos++;
+                    this.directon = Direction.RIGHT;
                     break;
             }
         }

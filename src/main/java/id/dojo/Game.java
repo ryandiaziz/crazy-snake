@@ -5,7 +5,6 @@ package id.dojo;
 import id.dojo.enums.Direction;
 import id.dojo.models.Point;
 import id.dojo.things.Board;
-import id.dojo.things.Cell;
 import id.dojo.things.Snake;
 import id.dojo.things.Wall;
 
@@ -25,12 +24,16 @@ public class Game {
         this.speed = builder.speed;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public void render() throws IOException, InterruptedException {
         while (true){
             board.displayBoard();
-            snakeMovement();
+            snake.snakeMovement(board,"forward");
 
-            Thread.sleep(80);
+            Thread.sleep(200);
 
             new ProcessBuilder("clear")
                     .inheritIO()
@@ -44,19 +47,19 @@ public class Game {
         return board.getBoard().get(point.getX()).get(point.getY()).getThing() == null;
     }
 
-    public void snakeMovement(){
-        Direction direction = snake.getRandomDirection();
-        Point forward = snake.checkDirection("forward");
-        Point left = snake.checkDirection("left");
-        Point right = snake.checkDirection("right");
-
-        if (isEmpty(forward) && direction == Direction.FORWARD){
-            snake.snakeMovement(board, "forward");
-        }else if(isEmpty(left) && direction == Direction.LEFT){
-            snake.snakeMovement(board, "left");
-        } else if (isEmpty(right) && direction == Direction.RIGHT) {
-            snake.snakeMovement(board, "right");
-        }
+    public void movement(){
+//        Direction direction = snake.getRandomDirection();
+//        Point forward = snake.checkDirection("forward");
+//        Point left = snake.checkDirection("left");
+//        Point right = snake.checkDirection("right");
+//
+//        if (isEmpty(forward) && direction == Direction.FORWARD){
+//            snake.snakeMovement(board, "forward");
+//        }else if(isEmpty(left) && direction == Direction.LEFT){
+//            snake.snakeMovement(board, "left");
+//        } else if (isEmpty(right) && direction == Direction.RIGHT) {
+//            snake.snakeMovement(board, "right");
+//        }
     }
 
     public static Builder getBuilder(){
