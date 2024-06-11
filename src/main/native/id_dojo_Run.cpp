@@ -24,19 +24,19 @@ void detectArrowKeys(JNIEnv *env) {
                 if (seq[0] == '[') {
                     switch (seq[1]) {
                         case 'A':
-                            std::cout << "Up arrow key pressed\n";
+//                            std::cout << "Up arrow key pressed\n";
                             env -> CallStaticVoidMethod(runClass, controlUp);
                             break;
                         case 'B':
-                            std::cout << "Down arrow key pressed\n";
+//                            std::cout << "Down arrow key pressed\n";
                             env -> CallStaticVoidMethod(runClass, controlDown);
                             break;
                         case 'C':
-                            std::cout << "Right arrow key pressed\n";
+//                            std::cout << "Right arrow key pressed\n";
                             env -> CallStaticVoidMethod(runClass, controlRight);
                             break;
                         case 'D':
-                            std::cout << "Left arrow key pressed\n";
+//                            std::cout << "Left arrow key pressed\n";
                             env -> CallStaticVoidMethod(runClass, controlLeft);
                             break;
                     }

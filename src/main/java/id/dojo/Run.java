@@ -1,6 +1,7 @@
 package id.dojo;
 
 import id.dojo.enums.Direction;
+import id.dojo.things.Fruit;
 import id.dojo.things.Snake;
 
 import java.io.IOException;
@@ -8,6 +9,7 @@ import java.io.IOException;
 public class Run {
     static Snake snake;
     static Game game;
+    static Fruit fruit;
 
     static {
         System.loadLibrary("native");
@@ -56,8 +58,6 @@ public class Run {
     }
 
     public static void main(String[] args) {
-//        controls();
-
         int row = 30;
         int col = 20;
         int posX = 8;
@@ -72,18 +72,23 @@ public class Run {
 
         snake.generateBody();
 
+        fruit = Fruit.getBuilder()
+                .setName("buah")
+                .setAppearance(" Q ")
+                .setPosition(row, col)
+                .build();
+
         game = Game.getBuilder()
-                .createBoard(row,col)
+                .createBoard(row, col)
                 .createWalls()
                 .createSnake(snake)
+                .creatFruit(fruit)
                 .generatePopulation()
                 .build();
 
         try {
             game.render();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

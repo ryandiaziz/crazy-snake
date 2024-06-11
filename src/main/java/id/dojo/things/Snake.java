@@ -18,8 +18,15 @@ public class Snake extends Thing implements AnimalBehavior{
         super(builder.getName(), builder.getAppearance());
         this.head = builder.getPosition();
         this.size = builder.getSize();
-
         body = new ArrayList<>();
+    }
+
+    public void setBody() {
+        this.body.add(new Point(body.getLast().getX() - 1, body.getLast().getY()));
+    }
+
+    public List<Point> getBody() {
+        return body;
     }
 
     public void generateBody(){

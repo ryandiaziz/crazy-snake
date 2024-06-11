@@ -1,9 +1,12 @@
 package id.dojo.things;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cell extends Thing{
     private final int row;
     private final int col;
-    private Thing thing;
+    private List<Thing> thing;
 
     public Cell(String name, String appearance, int row, int col) {
         super(name, appearance);
@@ -19,12 +22,18 @@ public class Cell extends Thing{
         return col;
     }
 
-    public Thing getThing() {
+    public List<Thing> getThing() {
         return thing;
     }
 
     public void setThing(Thing thing) {
-        this.thing = thing;
+        if (this.thing == null){
+            List<Thing> newThing = new ArrayList<>();
+            newThing.add(thing);
+            this.thing = newThing;
+        }else {
+            this.thing.add(thing);
+        }
     }
 
     public void removeThing(){
@@ -33,7 +42,7 @@ public class Cell extends Thing{
 
     public void displayCell(){
         if(thing != null){
-            System.out.print(thing.getAppearance());
+            System.out.print(thing.getFirst().getAppearance());
         }else{
             System.out.print("   ");
         }
